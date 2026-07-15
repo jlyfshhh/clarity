@@ -10,6 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Clarity",
     description: "Know your water. A shared household dashboard for aquariums and ponds.",
+    icons: { icon: "/favicon.svg" },
     openGraph: { title: "Clarity", description: "Know your water.", images: [socialImage] },
     twitter: { card: "summary_large_image", title: "Clarity", description: "Know your water.", images: [socialImage] },
   };
