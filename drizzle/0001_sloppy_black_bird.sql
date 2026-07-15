@@ -1,0 +1,1 @@
+CREATE INDEX `water_readings_habitat_date_idx` ON `water_readings` (`habitat_id`,`recorded_at`);
