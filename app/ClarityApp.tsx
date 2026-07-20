@@ -36,7 +36,12 @@ export default function ClarityApp() {
     if (!response.ok) throw new Error("Dashboard unavailable");
     setData(await response.json());
   };
-  useEffect(() => { refresh().catch(() => setToast("Couldn’t load your water records yet.")); const timer = window.setInterval(() => refresh().catch(() => undefined), 15000); return () => window.clearInterval(timer); }, []);
+  useEffect(() => {
+    // Deferred a tick so the effect body itself never sets state (react-hooks/set-state-in-effect).
+    const initial = window.setTimeout(() => refresh().catch(() => setToast("Couldn’t load your water records yet.")), 0);
+    const timer = window.setInterval(() => refresh().catch(() => undefined), 15000);
+    return () => { window.clearTimeout(initial); window.clearInterval(timer); };
+  }, []);
   const notify = (message: string) => { setToast(message); window.setTimeout(() => setToast(null), 2800); };
 
   const completeTask = async (task: Task) => {
